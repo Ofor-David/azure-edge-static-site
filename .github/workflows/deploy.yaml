@@ -3,9 +3,7 @@ name: Deploy React App to Azure Storage
 on:
   push:
     branches:
-      - main   # or your chosen branch
-    paths:
-      - 'portfolio-website/**'  
+      - main   # or your chosen branch 
 
 jobs:
   build-and-deploy:
