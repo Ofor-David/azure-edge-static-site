@@ -1,0 +1,41 @@
+name: Deploy React App to Azure Storage
+
+on:
+  push:
+    branches:
+      - main   # or your chosen branch
+    paths:
+      - 'portfolio-website/**'  
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v4.2.2
+
+      # Set up Node
+      - name: Set up Node.js
+        uses: actions/setup-node@v4.4.0
+        with:
+          node-version: '18'
+
+      # Install & build React app
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build React app
+        run: npm run build
+
+      # Deploy build folder to Azure Storage
+      - name: Deploy to Azure Storage
+        uses: azure/cli@v2.1.0
+        with:
+          inlineScript: |
+            az storage blob upload-batch \
+              --account-name ${{ secrets.AZURE_STORAGE_ACCOUNT }} \
+              --account-key ${{ secrets.AZURE_STORAGE_KEY }} \
+              --source ./portfolio-website/dist \
+              --destination '$web'
