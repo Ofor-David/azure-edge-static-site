@@ -23,11 +23,11 @@ jobs:
       # Install & build React app
       - name: Install dependencies
         run: npm install
-        working-directory: ./portfolio-website
+        working-directory: ./app
 
       - name: Build React app
         run: npm run build
-        working-directory: ./portfolio-website
+        working-directory: ./app
 
       # Deploy build folder to Azure Storage
       - name: Deploy to Azure Storage
@@ -37,5 +37,5 @@ jobs:
             az storage blob upload-batch \
               --account-name ${{ secrets.AZURE_STORAGE_ACCOUNT }} \
               --account-key ${{ secrets.AZURE_STORAGE_KEY }} \
-              --source ./portfolio-website/dist \
+              --source ./app/dist \
               --destination '$web'
