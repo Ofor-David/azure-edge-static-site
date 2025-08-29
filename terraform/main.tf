@@ -1,7 +1,7 @@
 # Create a resource group
 resource "azurerm_resource_group" "rg" {
   name     = "${var.name_prefix}-resource-group"
-  location = "West Europe"
+  location = var.location
 }
 
 # 2. Storage Account
@@ -20,15 +20,12 @@ resource "azurerm_storage_account" "static" {
   
 }
 
-# 3. Static Website Config
-/* resource "azurerm_storage_account_static_website" "site" {
-  storage_account_id = azurerm_storage_account.static.id
 
-  index_document = "index.html"
-  error_404_document = "index.html"
-} */
-
-# 4. Output the site URL
+# Output the site URL
 output "static_site_url" {
   value = azurerm_storage_account.static.primary_web_endpoint
+}
+
+output "azure_storage_account_name" {
+  value = azurerm_storage_account.static.name
 }

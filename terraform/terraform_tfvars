@@ -1,0 +1,3 @@
+name_prefix = "portfolio"
+storage_account_name = "name for your storage account"
+location = "West Europe"
